@@ -27,4 +27,8 @@ export class TodosService {
   async getTodos() {
     return Promise.resolve(this.todos);
   }
+
+  async getOneTodo(id: number) {
+    return Promise.resolve(this.todos.find(t => t.id === id));
+  }
 }

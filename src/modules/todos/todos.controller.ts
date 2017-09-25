@@ -1,4 +1,5 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Req } from '@nestjs/common';
+import { Request } from 'express';
 
 import { TodosService } from './todos.service';
 
@@ -14,5 +15,10 @@ export class TodosController {
   @Get()
   async getTodos() {
     return this.todosService.getTodos();
+  }
+
+  @Get('/:id')
+  async getOneTodo(@Req() req: Request) {
+    return this.todosService.getOneTodo(req.params.id);
   }
 }
