@@ -1,0 +1,29 @@
+{
+  "name": "project-starscream",
+  "version": "1.0.0",
+  "description": "A Node.js project built with Typescript & Nest Framework.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -x ts-node -r dotenv/config src/server.ts",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^4.0.0",
+    "@nestjs/core": "^4.0.3",
+    "@nestjs/microservices": "^4.0.0",
+    "@nestjs/testing": "^4.0.0",
+    "@nestjs/websockets": "^4.0.0",
+    "dotenv": "^4.0.0",
+    "redis": "^2.7.1",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.1",
+    "@types/node": "^8.0.28",
+    "@types/reflect-metadata": "0.0.5",
+    "nodemon": "^1.12.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2"
+  }
+}
