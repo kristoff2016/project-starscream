@@ -35,7 +35,7 @@ export class ValidationPipe implements PipeTransform<any> {
 
     if (typeof value === 'object') {
       for (const v in value) {
-        if (value.hasOwnProperty(v) && isNumeric(value[v])) {
+        if (Object.prototype.hasOwnProperty.call(value, v) && isNumeric(value[v])) {
           value[v] = +value[v];
         }
       }
