@@ -47,9 +47,15 @@
     "typescript": "^2.5.2"
   },
   "nyc": {
-    "include": [ "src/**/*.ts" ],
-    "extension": [ ".ts" ],
-    "reporter": [ "html" ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "html"
+    ],
     "all": true,
     "report-dir": "./coverage"
   }
