@@ -4,6 +4,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "noImplicitAny": false,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "module": "commonjs",

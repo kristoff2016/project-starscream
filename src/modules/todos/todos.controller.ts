@@ -1,24 +1,35 @@
-import { Controller, Get, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Get, Inject, Param, Post, Query } from '@nestjs/common';
 
-import { TodosService } from './todos.service';
+import { default as Todo, TodoAttributesOpt, TodoService, TodoToken } from '../../models/todo.model';
+import { AddTodoDto, GetTodosDto } from './todos.interface';
 
 @Controller('todos')
 export class TodosController {
-  constructor(private readonly todosService: TodosService) {}
+  constructor(@Inject(TodoToken) private readonly todosService: TodoService) {}
 
   @Post()
-  async addTodo() {
-    return 'Add Todo';
+  async addTodo(@Body() body: AddTodoDto) {
+    const todo = await this.todosService.create<Todo, TodoAttributesOpt>({
+      title: body.title,
+      description: body.description
+    });
+    return todo;
   }
 
   @Get()
-  async getTodos() {
-    return this.todosService.getTodos();
+  async getTodos(@Query() { limit, offset }: GetTodosDto) {
+    const todos = await this.todosService.findAll({
+      limit,
+      offset
+    });
+    return todos;
   }
 
-  @Get('/:id')
-  async getOneTodo(@Req() req: Request) {
-    return this.todosService.getOneTodo(req.params.id);
+  @Get(':id')
+  async getOneTodo(@Param('id') id: number) {
+    const todo = await this.todosService.findOne<Todo>({
+      where: { id }
+    });
+    return todo;
   }
 }

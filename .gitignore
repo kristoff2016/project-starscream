@@ -5,13 +5,13 @@
 /.idea
 
 # misc
+.DS_Store
 npm-debug.log
 
 # environment variables
 /.env
 
 # tests
-/test
 /coverage
 /.nyc_output
 
