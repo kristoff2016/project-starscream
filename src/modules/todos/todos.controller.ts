@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Inject, Param, Post, Query } from '@nestjs/common';
 
+import { BadRequestException } from '../../common/exceptions/bad-request.exception';
 import { default as Todo, TodoAttributesOpt, TodoService, TodoToken } from '../../models/todo.model';
 import { AddTodoDto, GetTodosDto } from './todos.interface';
 
@@ -9,6 +10,9 @@ export class TodosController {
 
   @Post()
   async addTodo(@Body() body: AddTodoDto) {
+    if (body.title === 'James') {
+      throw new BadRequestException({ message: (this as any).call() });
+    }
     const todo = await this.todosService.create<Todo, TodoAttributesOpt>({
       title: body.title,
       description: body.description
