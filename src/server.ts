@@ -10,27 +10,14 @@ import { customMessages } from './common/validation.messages';
 import { customRules } from './common/validation.rules';
 import { ApplicationModule } from './modules/app.module';
 
-const instance = express();
-
-instance.use(json());
-instance.use(urlencoded({ extended: false }));
-
-async function createApplication() {
-  const app = await NestFactory.create(ApplicationModule, instance);
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      customRules,
-      customMessages
-    })
-  );
-
-  return app;
-}
-
 export async function createServer() {
-  const app = await createApplication();
-  await app.init();
+  const instance = express();
+  instance.use(json());
+  instance.use(urlencoded({ extended: false }));
 
+  const app = await NestFactory.create(ApplicationModule, instance);
+  app.useGlobalPipes(new ValidationPipe({ customRules, customMessages }));
+
+  await app.init();
   return http.createServer(instance);
 }
