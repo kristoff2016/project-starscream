@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Param, Post, Query } from '@nestjs/common';
 
 import { default as Todo, TodoAttributesOpt, TodoModel, TodoModelToken } from '../../models/todo.model';
-import { AddTodoDto, GetTodosDto } from './todos.interface';
+import { AddTodoDto, GetTodosDto } from './todos.dto';
 
 @Controller('todos')
 export class TodosController {
