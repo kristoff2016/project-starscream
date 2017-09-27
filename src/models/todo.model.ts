@@ -1,6 +1,6 @@
 import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
-export const TodoToken = Symbol('TodoModelToken');
+export const TodoModelToken = Symbol('TodoModelToken');
 
 @Table({ name: { singular: 'todo', plural: 'todos' }, tableName: 'todos' })
 export default class Todo extends Model<Todo> {
@@ -16,8 +16,8 @@ export default class Todo extends Model<Todo> {
   @Column description?: string;
 }
 
-export const TodoProvider = { provide: TodoToken, useValue: Todo };
+export const TodoProvider = { provide: TodoModelToken, useValue: Todo };
 
-export type TodoService = typeof Todo;
+export type TodoModel = typeof Todo;
 export type TodoAttributes = Pick<Todo, 'id' | 'title' | 'description'>;
 export type TodoAttributesOpt = Partial<TodoAttributes>;

@@ -1,19 +1,15 @@
 import { Body, Controller, Get, Inject, Param, Post, Query } from '@nestjs/common';
 
-import { BadRequestException } from '../../common/exceptions/bad-request.exception';
-import { default as Todo, TodoAttributesOpt, TodoService, TodoToken } from '../../models/todo.model';
+import { default as Todo, TodoAttributesOpt, TodoModel, TodoModelToken } from '../../models/todo.model';
 import { AddTodoDto, GetTodosDto } from './todos.interface';
 
 @Controller('todos')
 export class TodosController {
-  constructor(@Inject(TodoToken) private readonly todosService: TodoService) {}
+  constructor(@Inject(TodoModelToken) private readonly todoModel: TodoModel) {}
 
   @Post()
   async addTodo(@Body() body: AddTodoDto) {
-    if (body.title === 'James') {
-      throw new BadRequestException({ message: (this as any).call() });
-    }
-    const todo = await this.todosService.create<Todo, TodoAttributesOpt>({
+    const todo = await this.todoModel.create<Todo, TodoAttributesOpt>({
       title: body.title,
       description: body.description
     });
@@ -22,7 +18,7 @@ export class TodosController {
 
   @Get()
   async getTodos(@Query() { limit, offset }: GetTodosDto) {
-    const todos = await this.todosService.findAll({
+    const todos = await this.todoModel.findAll({
       limit,
       offset
     });
@@ -31,7 +27,7 @@ export class TodosController {
 
   @Get(':id')
   async getOneTodo(@Param('id') id: number) {
-    const todo = await this.todosService.findOne<Todo>({
+    const todo = await this.todoModel.findOne<Todo>({
       where: { id }
     });
     return todo;

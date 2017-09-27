@@ -3,8 +3,8 @@ import chaiHttp = require('chai-http');
 
 import { createServer } from '../../server';
 
-
 chai.use(chaiHttp);
+
 const { expect } = chai;
 let server;
 
