@@ -18,5 +18,8 @@ export const sequelize = new Sequelize({
 
 export const SequelizeProvider = {
   provide: SequelizeToken,
-  useValue: sequelize
+  useFactory: async () => {
+    await sequelize.sync();
+    return sequelize;
+  }
 };

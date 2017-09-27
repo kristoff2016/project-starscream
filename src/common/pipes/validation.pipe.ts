@@ -3,8 +3,7 @@ import { HttpException } from '@nestjs/core';
 import { extend, Messages, validateAll, ValidationMethod } from 'indicative';
 
 import { MESSAGES_KEY, RULES_KEY } from '../constants/metadata-keys';
-
-const isNumeric = (n: any) => !isNaN(n);
+import { isNumeric } from '../numbers';
 
 @Pipe()
 export class ValidationPipe implements PipeTransform<any> {
@@ -28,19 +27,21 @@ export class ValidationPipe implements PipeTransform<any> {
   }
 
   async transform(value: any, metadata: ArgumentMetadata) {
-    const { metatype } = metadata;
+    const { metatype, type } = metadata;
 
     const rules = Reflect.getMetadata(RULES_KEY, metatype!.prototype as any);
     const messages = Reflect.getMetadata(MESSAGES_KEY, metatype!.prototype as any);
 
-    if (typeof value === 'object') {
-      for (const v in value) {
-        if (Object.prototype.hasOwnProperty.call(value, v) && isNumeric(value[v])) {
-          value[v] = +value[v];
+    if (type !== 'body') {
+      if (typeof value === 'object') {
+        for (const v in value) {
+          if (Object.prototype.hasOwnProperty.call(value, v) && isNumeric(value[v])) {
+            value[v] = +value[v];
+          }
         }
+      } else if (isNumeric(value)) {
+        value = +value;
       }
-    } else if (isNumeric(value)) {
-      value = +value;
     }
 
     await validateAll(value, rules, Object.assign(this.customMessages, messages)).catch(errors => {

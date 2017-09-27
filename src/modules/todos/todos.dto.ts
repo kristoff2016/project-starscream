@@ -1,4 +1,4 @@
-import { Messages, Rules } from '../../common/validation';
+import { Messages, Rules } from '../../common';
 import { Gender, Song } from './todos.interface';
 
 export class AddTodoDto {

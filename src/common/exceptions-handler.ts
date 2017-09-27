@@ -8,7 +8,7 @@ const pe = new PrettyError();
 export class ExceptionsHandler implements ExceptionFilter {
   catch(err, res) {
     if (err instanceof HttpException) {
-      console.error('HTTP', err);
+      console.error('HTTP', JSON.stringify(err));
 
       const status = err.getStatus();
       const response = err.getResponse();

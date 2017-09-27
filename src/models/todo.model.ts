@@ -1,4 +1,15 @@
-import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import {
+  AllowNull,
+  AutoIncrement,
+  BelongsTo,
+  Column,
+  ForeignKey,
+  Model,
+  PrimaryKey,
+  Table,
+} from 'sequelize-typescript';
+
+import User from './user.model';
 
 export const TodoModelToken = Symbol('TodoModelToken');
 
@@ -14,6 +25,13 @@ export default class Todo extends Model<Todo> {
   title: string;
 
   @Column description?: string;
+
+  @ForeignKey(() => User)
+  @Column
+  userId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 }
 
 export const TodoProvider = { provide: TodoModelToken, useValue: Todo };
